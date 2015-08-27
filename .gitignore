@@ -1,0 +1,6 @@
+iOS/main.jsbundle
+node_modules
+npm-debug.log
+iOS/HelloWorld.xcodeproj/project.xcworkspace/
+iOS/HelloWorld.xcodeproj/xcuserdata/
+iOS/HelloWorld.xcodeproj/project.pbxproj
