@@ -40,7 +40,7 @@ var HelloWorld = React.createClass({
         </Text>
         <TodoList
           todoitems={this.state.dataSource}
-          onDeleteTodo={this.onDeleteTodo.bind(this)}
+          onDeleteTodo={this.onDeleteTodo}
         />
       </View>
     );
@@ -49,20 +49,20 @@ var HelloWorld = React.createClass({
     console.log("deleting item -> " + item);
     var index = todos.indexOf(item);
     todos.splice(index, 1);
-    console.log(todos);
-    var ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(todos),
+      dataSource: this.getDatasource(todos),
     })
     // this.state.dataSource = ds.cloneWithRows(todos);
-    // console.log(this.state.dataSource);
+    console.log(this.state.dataSource);
+  },
+  getDatasource: function(todos: Array<any>): ListView.DataSource {
+    return this.state.dataSource.cloneWithRows(todos);
   }
 });
 
 var TodoList = React.createClass({
   render: function() {
+    console.log(this.props.todoitems._dataBlob.s1);
     return (
       <View style={styles.todolist}>
           <Text style={styles.todolisttitle}>
@@ -80,7 +80,7 @@ var TodoList = React.createClass({
     console.log(arguments);
     this.props.onDeleteTodo(item);
   },
-  _renderRow: function(item) {
+  _renderRow: function(item, sectionID, rowID, highlightRowFunc) {
     var swipeoutBtns = [
     {
       text: 'Button',
@@ -92,7 +92,8 @@ var TodoList = React.createClass({
       <View>
         <Swipeout
           right={swipeoutBtns}
-          autoClose={true}>
+          autoClose={true}
+          onOpen={()=> console.log(item)}>
           <View style={styles.swipeoutbtn}>
             <Text style={styles.swipeoutbtntext}> {item} </Text>
           </View>
